@@ -45,6 +45,7 @@ public class NotificationListener extends NotificationListenerService {
     @RequiresApi(api = VERSION_CODES.KITKAT)
     private void handleNotification(StatusBarNotification notification, boolean isRemoved) {
         String packageName = notification.getPackageName();
+        String appName = getAppName(packageName);
         Bundle extras = notification.getNotification().extras;
         byte[] appIcon = getAppIcon(packageName);
         byte[] largeIcon = null;
@@ -56,6 +57,7 @@ public class NotificationListener extends NotificationListenerService {
 
         Intent intent = new Intent(NotificationConstants.INTENT);
         intent.putExtra(NotificationConstants.PACKAGE_NAME, packageName);
+        intent.putExtra(NotificationConstants.APP_NAME, appName);
         intent.putExtra(NotificationConstants.ID, notification.getId());
         intent.putExtra(NotificationConstants.CAN_REPLY, action != null);
 
@@ -85,6 +87,16 @@ public class NotificationListener extends NotificationListenerService {
         sendBroadcast(intent);
     }
 
+    // app name
+    private String getAppName(String packageName) {
+        PackageManager manager = getBaseContext().getPackageManager();
+        try {
+            return manager.getApplicationLabel(manager.getApplicationInfo(packageName, PackageManager.GET_META_DATA)).toString();
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     public byte[] getAppIcon(String packageName) {
         try {

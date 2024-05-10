@@ -6,6 +6,8 @@ class ServiceNotificationEvent {
   /// the notification id
   int? id;
 
+  String? appName;
+
   /// check if we can reply the Notification
   bool? canReply;
 
@@ -59,6 +61,7 @@ class ServiceNotificationEvent {
     this.extrasPicture,
     this.packageName,
     this.title,
+    this.appName,
     this.appIcon,
     this.largeIcon,
     this.content,
@@ -72,6 +75,7 @@ class ServiceNotificationEvent {
     extrasPicture = map['notificationExtrasPicture'];
     packageName = map['packageName'];
     title = map['title'];
+    appName = map['appName'];
     appIcon = map['appIcon'];
     largeIcon = map['largeIcon'];
     content = map['content'];
@@ -97,6 +101,7 @@ class ServiceNotificationEvent {
       id: $id
       can reply: $canReply
       packageName: $packageName
+      appName: $appName
       title: $title
       content: $content
       hasRemoved: $hasRemoved
