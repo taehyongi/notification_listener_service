@@ -49,8 +49,6 @@ public class NotificationListenerServicePlugin implements FlutterPlugin, Activit
 
     private Result pendingResult;
     final int REQUEST_CODE_FOR_NOTIFICATIONS = 1199;
-
-    private Result result;
     private boolean resultSubmitted = false;
 
     @Override
@@ -166,10 +164,10 @@ public class NotificationListenerServicePlugin implements FlutterPlugin, Activit
         if (requestCode == REQUEST_CODE_FOR_NOTIFICATIONS) {
             if (!resultSubmitted) {
                 if (resultCode == Activity.RESULT_OK) {
-                    result.success("Success");
+                    pendingResult.success("Success");
                     resultSubmitted = true;
                 } else {
-                    result.error("ERROR", "Failed", null);
+                    pendingResult.error("ERROR", "Failed", null);
                     resultSubmitted = true;
                 }
             }
