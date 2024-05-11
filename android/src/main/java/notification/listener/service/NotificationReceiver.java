@@ -38,6 +38,8 @@ public class NotificationReceiver extends BroadcastReceiver {
         boolean canReply = intent.getBooleanExtra(CAN_REPLY, false);
         int id = intent.getIntExtra(ID, -1);
 
+        Log.d("NotificationReceiver", "id: " + id.toString());
+
 
         HashMap<String, Object> data = new HashMap<>();
         data.put("type", "notification");
