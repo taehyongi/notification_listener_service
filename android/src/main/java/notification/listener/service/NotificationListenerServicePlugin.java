@@ -11,7 +11,10 @@ import android.content.IntentFilter;
 import android.os.Build;
 import android.provider.Settings;
 import android.util.Log;
+import android.content.pm.PackageManager;
+import android.content.pm.ApplicationInfo;
 
+import android.provider.Telephony;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
@@ -41,6 +44,8 @@ public class NotificationListenerServicePlugin implements FlutterPlugin, Activit
     private SmsReceiver smsReceiver;
     private Context context;
     private Activity mActivity;
+    private String smsDefaultPackageName;
+    private String smsDefaultAppName;
 
     private Result pendingResult;
     final int REQUEST_CODE_FOR_NOTIFICATIONS = 1199;
@@ -52,6 +57,19 @@ public class NotificationListenerServicePlugin implements FlutterPlugin, Activit
         channel.setMethodCallHandler(this);
         eventChannel = new EventChannel(flutterPluginBinding.getBinaryMessenger(), EVENT_TAG);
         eventChannel.setStreamHandler(this);
+
+
+        // sms 기본 패키지 이름
+        smsDefaultPackageName = Telephony.Sms.getDefaultSmsPackage(context);
+        PackageManager pm = context.getPackageManager();
+        Log.d("smsDefaultPackageName", smsDefaultPackageName);
+        try {
+            ApplicationInfo appInfo = pm.getApplicationInfo(smsDefaultPackageName, 0);
+            smsDefaultAppName = pm.getApplicationLabel(appInfo).toString();
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+          
     }
 
     @Override
@@ -116,7 +134,8 @@ public class NotificationListenerServicePlugin implements FlutterPlugin, Activit
         intentFilter.addAction(NotificationConstants.INTENT);
         smsIntentFilter.addAction(NotificationConstants.SMS_INTENT);
         notificationReceiver = new NotificationReceiver(events);
-        smsReceiver = new SmsReceiver(events);
+
+        smsReceiver = new SmsReceiver(events, smsDefaultPackageName, smsDefaultAppName);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
             context.registerReceiver(notificationReceiver, intentFilter, Context.RECEIVER_EXPORTED);
             context.registerReceiver(smsReceiver, smsIntentFilter, Context.RECEIVER_EXPORTED);

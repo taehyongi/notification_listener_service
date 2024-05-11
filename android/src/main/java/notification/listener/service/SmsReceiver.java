@@ -8,7 +8,6 @@ import android.os.Build;
 import android.telephony.SmsMessage;
 import android.util.Log;
 import androidx.annotation.RequiresApi;
-
 import io.flutter.plugin.common.EventChannel.EventSink;
 
 import java.util.HashMap;
@@ -17,12 +16,22 @@ public class SmsReceiver extends BroadcastReceiver {
 
     private EventSink eventSink;
 
+    // sms 기본 패키지 이름
+    private String SMS_PACKAGE_NAME;
+    
+    // sms 기본 앱 이름
+    private String SMS_APP_NAME;
+
     public SmsReceiver() {
         // 기본 생성자
+
+       
     }
 
-    public SmsReceiver(EventSink eventSink) {
+    public SmsReceiver(EventSink eventSink, String smsDefaultPackageName, String smsDefaultAppName) {
         this.eventSink = eventSink;
+        this.SMS_PACKAGE_NAME = smsDefaultPackageName;
+        this.SMS_APP_NAME = smsDefaultAppName;
         Log.d("SmsReceiver eventSink", eventSink.toString());
     }
 
@@ -66,12 +75,10 @@ public class SmsReceiver extends BroadcastReceiver {
             HashMap<String, Object> data = new HashMap<>();
             // Add your desired data to the HashMap
             data.put("type", "sms"); 
-            data.put("address", messages[0].getOriginatingAddress());
-            data.put("body", messages[0].getMessageBody());
-            // data.put("packageName", packageName);
-            // data.put("appName", appName);
-            // data.put("title", title);
-            // data.put("content", content);
+            data.put("title", messages[0].getOriginatingAddress());
+            data.put("content", messages[0].getMessageBody());
+            data.put("packageName", this.SMS_PACKAGE_NAME);
+            data.put("appName", this.SMS_APP_NAME); 
             // data.put("notificationIcon", notificationIcon);
             // data.put("notificationExtrasPicture", notificationExtrasPicture);
             // data.put("haveExtraPicture", haveExtraPicture);

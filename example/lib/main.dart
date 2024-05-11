@@ -97,12 +97,12 @@ class _MyAppState extends State<MyApp> {
                           log(e.toString());
                         }
                       },
-                      trailing: events[index].hasRemoved!
-                          ? const Text(
-                              "Removed",
-                              style: TextStyle(color: Colors.red),
-                            )
-                          : const SizedBox.shrink(),
+                      // trailing: events[index].hasRemoved
+                      //     ? const Text(
+                      //         "Removed",
+                      //         style: TextStyle(color: Colors.red),
+                      //       )
+                      //     : const SizedBox.shrink(),
                       leading: events[index].appIcon == null
                           ? const SizedBox.shrink()
                           : Image.memory(
@@ -119,12 +119,12 @@ class _MyAppState extends State<MyApp> {
                             style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
                           const SizedBox(height: 8.0),
-                          events[index].canReply!
-                              ? const Text(
-                                  "Replied with: This is an auto reply",
-                                  style: TextStyle(color: Colors.purple),
-                                )
-                              : const SizedBox.shrink(),
+                          // events[index].canReply!
+                          //     ? const Text(
+                          //         "Replied with: This is an auto reply",
+                          //         style: TextStyle(color: Colors.purple),
+                          //       )
+                          //     : const SizedBox.shrink(),
                           events[index].largeIcon != null
                               ? Image.memory(
                                   events[index].largeIcon!,
