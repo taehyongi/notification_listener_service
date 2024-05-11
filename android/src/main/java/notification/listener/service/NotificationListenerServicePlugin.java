@@ -38,6 +38,7 @@ public class NotificationListenerServicePlugin implements FlutterPlugin, Activit
     private MethodChannel channel;
     private EventChannel eventChannel;
     private NotificationReceiver notificationReceiver;
+    private SmsReceiver smsReceiver;
     private Context context;
     private Activity mActivity;
 
@@ -111,22 +112,31 @@ public class NotificationListenerServicePlugin implements FlutterPlugin, Activit
     @Override
     public void onListen(Object arguments, EventChannel.EventSink events) {
         IntentFilter intentFilter = new IntentFilter();
+        IntentFilter smsIntentFilter = new IntentFilter();
         intentFilter.addAction(NotificationConstants.INTENT);
+        smsIntentFilter.addAction(NotificationConstants.SMS_INTENT);
         notificationReceiver = new NotificationReceiver(events);
+        smsReceiver = new SmsReceiver(events);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
             context.registerReceiver(notificationReceiver, intentFilter, Context.RECEIVER_EXPORTED);
+            context.registerReceiver(smsReceiver, smsIntentFilter, Context.RECEIVER_EXPORTED);
         }else{
             context.registerReceiver(notificationReceiver, intentFilter);
+            context.registerReceiver(smsReceiver, smsIntentFilter);
         }
         Intent listenerIntent = new Intent(context, NotificationReceiver.class);
+        Intent smsIntent = new Intent(context, SmsReceiver.class);
         context.startService(listenerIntent);
+        context.startService(smsIntent);
         Log.i("NotificationPlugin", "Started the notifications tracking service.");
     }
 
     @Override
     public void onCancel(Object arguments) {
         context.unregisterReceiver(notificationReceiver);
+        context.unregisterReceiver(smsReceiver);
         notificationReceiver = null;
+        smsReceiver = null;
     }
 
     @Override

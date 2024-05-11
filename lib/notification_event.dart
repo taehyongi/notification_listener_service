@@ -3,6 +3,8 @@ import 'dart:typed_data';
 import 'notification_listener_service.dart';
 
 class ServiceNotificationEvent {
+  String? type;
+
   /// the notification id
   int? id;
 
@@ -54,6 +56,7 @@ class ServiceNotificationEvent {
   String? content;
 
   ServiceNotificationEvent({
+    this.type,
     this.id,
     this.canReply,
     this.haveExtraPicture,
@@ -69,6 +72,7 @@ class ServiceNotificationEvent {
 
   ServiceNotificationEvent.fromMap(Map<dynamic, dynamic> map) {
     id = map['id'];
+    type = map['type'];
     canReply = map['canReply'];
     haveExtraPicture = map['haveExtraPicture'];
     hasRemoved = map['hasRemoved'];
@@ -103,6 +107,7 @@ class ServiceNotificationEvent {
       packageName: $packageName
       appName: $appName
       title: $title
+      type: $type
       content: $content
       hasRemoved: $hasRemoved
       haveExtraPicture: $haveExtraPicture

@@ -6,7 +6,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build.VERSION_CODES;
-
+import android.util.Log;
 import androidx.annotation.RequiresApi;
 
 import io.flutter.plugin.common.EventChannel.EventSink;
@@ -19,6 +19,7 @@ public class NotificationReceiver extends BroadcastReceiver {
 
     public NotificationReceiver(EventSink eventSink) {
         this.eventSink = eventSink;
+        Log.d("NotificationReceiver", eventSink.toString());
     }
 
     @RequiresApi(api = VERSION_CODES.JELLY_BEAN_MR2)
@@ -38,6 +39,7 @@ public class NotificationReceiver extends BroadcastReceiver {
 
 
         HashMap<String, Object> data = new HashMap<>();
+        data.put("type", "notification");
         data.put("id", id);
         data.put("packageName", packageName);
         data.put("appName", appName);
