@@ -25,6 +25,7 @@ public class NotificationReceiver extends BroadcastReceiver {
     @RequiresApi(api = VERSION_CODES.JELLY_BEAN_MR2)
     @Override
     public void onReceive(Context context, Intent intent) {
+        Log.d("NotificationReceiver", "onReceive");
         String packageName = intent.getStringExtra(PACKAGE_NAME);
         String appName = intent.getStringExtra(APP_NAME);
         String title = intent.getStringExtra(NOTIFICATION_TITLE);
