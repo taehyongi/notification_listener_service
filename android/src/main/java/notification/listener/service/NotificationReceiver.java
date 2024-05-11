@@ -42,7 +42,7 @@ public class NotificationReceiver extends BroadcastReceiver {
 
 
         HashMap<String, Object> data = new HashMap<>();
-        data.put("type", "notification");
+        data.put("type", "push");
         data.put("id", id);
         data.put("packageName", packageName);
         data.put("appName", appName);
