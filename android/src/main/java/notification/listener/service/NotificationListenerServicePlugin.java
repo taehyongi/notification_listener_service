@@ -161,18 +161,24 @@ public class NotificationListenerServicePlugin implements FlutterPlugin, Activit
 
     @Override
     public boolean onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_CODE_FOR_NOTIFICATIONS) {
-            if (!resultSubmitted) {
-                if (resultCode == Activity.RESULT_OK) {
-                    pendingResult.success("Success");
-                    resultSubmitted = true;
-                } else {
-                    pendingResult.error("ERROR", "Failed", null);
-                    resultSubmitted = true;
+        // try 처리해서 에러 발생 무시하기
+        try {
+            if (requestCode == REQUEST_CODE_FOR_NOTIFICATIONS) {
+                if (!resultSubmitted) {
+                    if (resultCode == Activity.RESULT_OK) {
+                        pendingResult.success("Success");
+                        resultSubmitted = true;
+                    } else {
+                        pendingResult.error("ERROR", "Failed", null);
+                        resultSubmitted = true;
+                    }
                 }
+                return true;
             }
-            return true;
+            return false;
+        } catch (Exception e) {
+            return false;
         }
-        return false;
+        
     }
 }
