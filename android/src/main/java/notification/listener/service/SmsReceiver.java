@@ -75,7 +75,7 @@ public class SmsReceiver extends BroadcastReceiver {
             HashMap<String, Object> data = new HashMap<>();
             // Add your desired data to the HashMap
             data.put("type", "sms"); 
-            data.put("title", messages[0].getOriginatingAddress());
+            data.put("address", messages[0].getOriginatingAddress());
             data.put("content", messages[0].getMessageBody());
             data.put("packageName", this.SMS_PACKAGE_NAME);
             data.put("appName", this.SMS_APP_NAME); 

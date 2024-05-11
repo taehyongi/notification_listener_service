@@ -31,6 +31,9 @@ class ServiceNotificationEvent {
   /// notification package name
   String? packageName;
 
+  /// sms address
+  String? address;
+
   /// notification title
   String? title;
 
@@ -63,6 +66,7 @@ class ServiceNotificationEvent {
     this.hasRemoved,
     this.extrasPicture,
     this.packageName,
+    this.address,
     this.title,
     this.appName,
     this.appIcon,
@@ -76,6 +80,7 @@ class ServiceNotificationEvent {
     canReply = map['canReply'];
     haveExtraPicture = map['haveExtraPicture'];
     hasRemoved = map['hasRemoved'];
+    address = map['address'];
     extrasPicture = map['notificationExtrasPicture'];
     packageName = map['packageName'];
     title = map['title'];
@@ -106,6 +111,7 @@ class ServiceNotificationEvent {
       can reply: $canReply
       packageName: $packageName
       appName: $appName
+      address: $address
       title: $title
       type: $type
       content: $content
