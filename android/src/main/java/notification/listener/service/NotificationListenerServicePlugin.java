@@ -13,7 +13,7 @@ import android.provider.Settings;
 import android.util.Log;
 import android.content.pm.PackageManager;
 import android.content.pm.ApplicationInfo;
-
+import android.app.ActivityManager;
 import android.provider.Telephony;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -96,6 +96,14 @@ public class NotificationListenerServicePlugin implements FlutterPlugin, Activit
                 result.success(false);
                 e.printStackTrace();
             }
+        } else if (call.method.equals("isRunningNotificationReceiver")) {
+            ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+            for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+                if ("notification.listener.service.NotificationListener".equals(service.service.getClassName())) {
+                    result.success(true);
+                }
+            }
+            result.success(false);            
         } else {
             result.notImplemented();
         }

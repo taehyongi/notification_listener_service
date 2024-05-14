@@ -25,6 +25,16 @@ class NotificationListenerService {
     throw Exception("Notifications API exclusively available on Android!");
   }
 
+  // notification receiver 작동 확인
+  static Future<bool> isRunningNotificationListener() async {
+    try {
+      return await methodeChannel.invokeMethod('isRunningNotificationListener');
+    } on PlatformException catch (error) {
+      log("$error");
+      return Future.value(false);
+    }
+  }
+
   /// request notification permission
   /// it will open the notification settings page and return `true` once the permission granted.
   static Future<bool> requestPermission() async {
