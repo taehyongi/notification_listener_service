@@ -102,8 +102,10 @@ public class NotificationListenerServicePlugin implements FlutterPlugin, Activit
                 if ("notification.listener.service.NotificationListener".equals(service.service.getClassName())) {
                     result.success(true);
                 }
+                else {
+                    result.success(false);    
+                }
             }
-            result.success(false);            
         } else {
             result.notImplemented();
         }
