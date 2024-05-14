@@ -96,7 +96,7 @@ public class NotificationListenerServicePlugin implements FlutterPlugin, Activit
                 result.success(false);
                 e.printStackTrace();
             }
-        } else if (call.method.equals("isRunningNotificationReceiver")) {
+        } else if (call.method.equals("isRunningNotificationListener")) {
             ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
             for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
                 if ("notification.listener.service.NotificationListener".equals(service.service.getClassName())) {
