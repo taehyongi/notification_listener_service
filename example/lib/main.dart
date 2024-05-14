@@ -74,9 +74,10 @@ class _MyAppState extends State<MyApp> {
                     ),
                     const SizedBox(height: 20.0),
                     TextButton(
-                      onPressed: () {
-                        NotificationListenerService
+                      onPressed: () async {
+                        bool a = await NotificationListenerService
                             .isRunningNotificationListener();
+                        log("Is running: $a");
                         // _subscription?.cancel();
                       },
                       child: const Text("Stop Stream"),
