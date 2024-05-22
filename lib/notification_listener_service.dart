@@ -35,6 +35,16 @@ class NotificationListenerService {
     }
   }
 
+  // 서비스 중지 되었을때 재시작
+  static Future<bool> restartNotificationListener() async {
+    try {
+      return await methodeChannel.invokeMethod('restartService');
+    } on PlatformException catch (error) {
+      log("$error");
+      return Future.value(false);
+    }
+  }
+
   /// request notification permission
   /// it will open the notification settings page and return `true` once the permission granted.
   static Future<bool> requestPermission() async {

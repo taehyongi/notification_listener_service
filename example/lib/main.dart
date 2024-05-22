@@ -77,7 +77,12 @@ class _MyAppState extends State<MyApp> {
                       onPressed: () async {
                         bool a = await NotificationListenerService
                             .isRunningNotificationListener();
-                        log("Is running: $a");
+                        log("Is a running: $a");
+
+                        bool b = await NotificationListenerService
+                            .restartNotificationListener();
+
+                        log("Is b running: $b");
                         // _subscription?.cancel();
                       },
                       child: const Text("Stop Stream"),

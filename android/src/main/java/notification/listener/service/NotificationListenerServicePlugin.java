@@ -107,7 +107,14 @@ public class NotificationListenerServicePlugin implements FlutterPlugin, Activit
                 }
             }
             result.success(false);
-        } else {
+        } else if(call.method.equals("restartService")) {
+            Intent listenerIntent = new Intent(context, NotificationReceiver.class);
+            Intent smsIntent = new Intent(context, SmsReceiver.class);
+            context.startService(listenerIntent);
+            context.startService(smsIntent);
+            result.success(true);   
+        }        
+        else {
             result.notImplemented();
         }
     }

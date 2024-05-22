@@ -61,15 +61,13 @@ public class SmsReceiver extends BroadcastReceiver {
         try {
             Bundle bundle = intent.getExtras();
             SmsMessage[] messages = parseMessage(bundle);
-
-            Log.d("SmsReceiver", "aaa");
+ 
 
             // 값이 있으면 첫번째 가져오기
             if (messages == null || messages.length < 1) {
                 return;
             }
-
-            Log.d("SmsReceiver", "vvv");
+ 
     
         
             HashMap<String, Object> data = new HashMap<>();
