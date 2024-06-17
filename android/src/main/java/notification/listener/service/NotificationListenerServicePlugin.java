@@ -79,8 +79,21 @@ public class NotificationListenerServicePlugin implements FlutterPlugin, Activit
         if (call.method.equals("isPermissionGranted")) {
             result.success(isPermissionGranted(context));
         } else if (call.method.equals("requestPermission")) {
-            Intent intent = new Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS);
-            mActivity.startActivityForResult(intent, REQUEST_CODE_FOR_NOTIFICATIONS);
+            try {
+                Intent intent = new Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS);
+                // api 29 이하일때
+                if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q) {
+                    mActivity.startActivityForResult(intent, REQUEST_CODE_FOR_NOTIFICATIONS);
+                }
+                else {
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent);
+                }  
+            }
+            catch (Exception e) {
+                Log.d("NotificationListenerServicePlugin", "Error: " + e);
+            }
+            Log.d("NotificationListenerServicePlugin", "requestPermission");
         } else if (call.method.equals("sendReply")) {
             final String message = call.argument("message");
             final int notificationId = call.argument("notificationId");
@@ -127,6 +140,7 @@ public class NotificationListenerServicePlugin implements FlutterPlugin, Activit
 
     @Override
     public void onAttachedToActivity(@NonNull ActivityPluginBinding binding) {
+        Log.d("NotificationListenerServicePlugin", "onAttachedToActivity");
         this.mActivity = binding.getActivity();
         binding.addActivityResultListener(this);
     }
@@ -143,6 +157,7 @@ public class NotificationListenerServicePlugin implements FlutterPlugin, Activit
 
     @Override
     public void onDetachedFromActivity() {
+        Log.d("NotificationListenerServicePlugin", "onDetachedFromActivity");
         this.mActivity = null;
     }
     @SuppressLint("WrongConstant")
