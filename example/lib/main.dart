@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:notification_listener_service/notification_event.dart';
 import 'package:notification_listener_service/notification_listener_service.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 void main() {
   runApp(const MyApp());
@@ -52,6 +53,10 @@ class _MyAppState extends State<MyApp> {
                     const SizedBox(height: 20.0),
                     TextButton(
                       onPressed: () async {
+                        Permission.sms.request();
+                        String a = await NotificationListenerService
+                            .getDefaultSmsPackageName();
+                        log("getDefaultSmsPackageName: $a");
                         final bool res = await NotificationListenerService
                             .isPermissionGranted();
                         log("Is enabled: $res");

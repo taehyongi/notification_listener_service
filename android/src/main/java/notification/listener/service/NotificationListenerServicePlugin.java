@@ -59,16 +59,22 @@ public class NotificationListenerServicePlugin implements FlutterPlugin, Activit
         eventChannel = new EventChannel(flutterPluginBinding.getBinaryMessenger(), EVENT_TAG);
         eventChannel.setStreamHandler(this);
 
-
-        // sms 기본 패키지 이름
-        smsDefaultPackageName = Telephony.Sms.getDefaultSmsPackage(context);
-        PackageManager pm = context.getPackageManager();
-        Log.d("smsDefaultPackageName", smsDefaultPackageName);
         try {
+            smsDefaultPackageName = Telephony.Sms.getDefaultSmsPackage(context);
+            PackageManager pm = context.getPackageManager();
             ApplicationInfo appInfo = pm.getApplicationInfo(smsDefaultPackageName, 0);
             smsDefaultAppName = pm.getApplicationLabel(appInfo).toString();
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
+        } finally {
+            // smsDefaultPackageName 가 null 이면 공백 입력
+            if(smsDefaultPackageName == null) {
+                smsDefaultPackageName = "";
+            }
+            // smsDefaultAppName 이 null 이면 공백 입력
+            if(smsDefaultAppName == null) {
+                smsDefaultAppName = "";
+            }
         }
           
     }
@@ -120,6 +126,10 @@ public class NotificationListenerServicePlugin implements FlutterPlugin, Activit
                 }
             }
             result.success(false);
+        } else if (call.method.equals("getDefaultSmsPackageName")) {
+            result.success(smsDefaultPackageName);
+        } else if (call.method.equals("getDefaultSmsAppName")) {
+            result.success(smsDefaultAppName);
         } else if(call.method.equals("restartService")) {
             Intent listenerIntent = new Intent(context, NotificationReceiver.class);
             Intent smsIntent = new Intent(context, SmsReceiver.class);

@@ -65,4 +65,24 @@ class NotificationListenerService {
       return false;
     }
   }
+
+  // getDefaultSmsPackageName
+  static Future<String> getDefaultSmsPackageName() async {
+    try {
+      return await methodeChannel.invokeMethod('getDefaultSmsPackageName');
+    } on PlatformException catch (error) {
+      log("$error");
+      return "";
+    }
+  }
+
+  // getDefaultSmsAppName
+  static Future<String> getDefaultSmsAppName() async {
+    try {
+      return await methodeChannel.invokeMethod('getDefaultSmsAppName');
+    } on PlatformException catch (error) {
+      log("$error");
+      return "";
+    }
+  }
 }
