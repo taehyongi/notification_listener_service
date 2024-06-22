@@ -42,6 +42,11 @@ public class NotificationReceiver extends BroadcastReceiver {
             return;
         }
 
+        // hasRemoved true 이면 보내지 않음
+        if (hasRemoved) {
+            return;
+        }
+
         HashMap<String, Object> data = new HashMap<>();
         data.put("type", "push");
         data.put("id", id);
