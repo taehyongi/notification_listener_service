@@ -25,7 +25,7 @@ public class NotificationReceiver extends BroadcastReceiver {
     @RequiresApi(api = VERSION_CODES.JELLY_BEAN_MR2)
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.d("NotificationReceiver 2", "onReceive");
+        
         String packageName = intent.getStringExtra(PACKAGE_NAME);
         String appName = intent.getStringExtra(APP_NAME);
         String title = intent.getStringExtra(NOTIFICATION_TITLE);
@@ -37,9 +37,6 @@ public class NotificationReceiver extends BroadcastReceiver {
         boolean hasRemoved = intent.getBooleanExtra(IS_REMOVED, false);
         boolean canReply = intent.getBooleanExtra(CAN_REPLY, false);
         int id = intent.getIntExtra(ID, -1);
-
-        Log.d("NotificationReceiver 3", "id: " + String.valueOf(id));
-
 
         HashMap<String, Object> data = new HashMap<>();
         data.put("type", "push");
@@ -54,6 +51,8 @@ public class NotificationReceiver extends BroadcastReceiver {
         data.put("largeIcon", largeIcon);
         data.put("hasRemoved", hasRemoved);
         data.put("canReply", canReply);
+
+        Log.d("NotificationReceiver", data.toString());
 
         eventSink.success(data);
     }
