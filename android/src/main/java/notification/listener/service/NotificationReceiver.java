@@ -27,8 +27,12 @@ public class NotificationReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         String packageName = intent.getStringExtra(PACKAGE_NAME);
         String appName = intent.getStringExtra(APP_NAME);
+        
         String title = intent.getStringExtra(NOTIFICATION_TITLE);
+        // title 에 유니코드 U+2068 을 모두 제거
+        title = title.replaceAll("\u2068", "").replaceAll("\u2069", "");
         String content = intent.getStringExtra(NOTIFICATION_CONTENT);
+        title = content.replaceAll("\u2068", "").replaceAll("\u2069", "");
         byte[] notificationIcon = intent.getByteArrayExtra(NOTIFICATIONS_ICON);
         byte[] notificationExtrasPicture = intent.getByteArrayExtra(EXTRAS_PICTURE);
         byte[] largeIcon = intent.getByteArrayExtra(NOTIFICATIONS_LARGE_ICON);
