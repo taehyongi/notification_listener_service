@@ -32,23 +32,23 @@ public class SmsReceiver extends BroadcastReceiver {
         this.eventSink = eventSink;
         this.SMS_PACKAGE_NAME = smsDefaultPackageName;
         this.SMS_APP_NAME = smsDefaultAppName;
-        Log.d("SmsReceiver eventSink", eventSink.toString());
+        // Log.d("SmsReceiver eventSink", eventSink.toString());
     }
 
     private SmsMessage[] parseMessage(Bundle bundle) {
-        Log.d("SmsReceiver", "parseMessage");
-        Log.d("SmsReceiver", bundle.toString());
+        // Log.d("SmsReceiver", "parseMessage");
+        // Log.d("SmsReceiver", bundle.toString());
         Object[] objs = (Object[]) bundle.get("pdus");
-        Log.d("SmsReceiver", "2");
-        Log.d("SmsReceiver objs", objs.toString());
+        // Log.d("SmsReceiver", "2");
+        // Log.d("SmsReceiver objs", objs.toString());
         SmsMessage[] messages = new SmsMessage[objs.length];
-        Log.d("SmsReceiver", "3");
+        // Log.d("SmsReceiver", "3");
 
         for(int i=0; i<objs.length; i++){
             messages[i] = SmsMessage.createFromPdu((byte[])objs[i]);
         }
 
-        Log.d("SmsReceiver", "4");
+        // Log.d("SmsReceiver", "4");
 
         return messages;
     }
@@ -56,7 +56,7 @@ public class SmsReceiver extends BroadcastReceiver {
     @RequiresApi(api = VERSION_CODES.JELLY_BEAN_MR2)
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.d("SmsReceiver", "onReceive");
+        // Log.d("SmsReceiver", "onReceive");
 
         try {
             Bundle bundle = intent.getExtras();
@@ -84,7 +84,7 @@ public class SmsReceiver extends BroadcastReceiver {
             // data.put("hasRemoved", hasRemoved);
             // data.put("canReply", canReply);
 
-            Log.d("SmsReceiver", data.toString());
+            // Log.d("SmsReceiver", data.toString());
 
             eventSink.success(data);
         } catch (Exception e) {
