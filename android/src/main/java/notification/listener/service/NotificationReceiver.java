@@ -32,7 +32,7 @@ public class NotificationReceiver extends BroadcastReceiver {
         // title 에 유니코드 U+2068 을 모두 제거
         title = title.replaceAll("\u2068", "").replaceAll("\u2069", "");
         String content = intent.getStringExtra(NOTIFICATION_CONTENT);
-        title = content.replaceAll("\u2068", "").replaceAll("\u2069", "");
+        content = content.replaceAll("\u2068", "").replaceAll("\u2069", "");
         byte[] notificationIcon = intent.getByteArrayExtra(NOTIFICATIONS_ICON);
         byte[] notificationExtrasPicture = intent.getByteArrayExtra(EXTRAS_PICTURE);
         byte[] largeIcon = intent.getByteArrayExtra(NOTIFICATIONS_LARGE_ICON);
