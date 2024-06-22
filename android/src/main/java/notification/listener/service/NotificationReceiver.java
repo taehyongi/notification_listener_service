@@ -25,7 +25,6 @@ public class NotificationReceiver extends BroadcastReceiver {
     @RequiresApi(api = VERSION_CODES.JELLY_BEAN_MR2)
     @Override
     public void onReceive(Context context, Intent intent) {
-        
         String packageName = intent.getStringExtra(PACKAGE_NAME);
         String appName = intent.getStringExtra(APP_NAME);
         String title = intent.getStringExtra(NOTIFICATION_TITLE);
@@ -37,6 +36,11 @@ public class NotificationReceiver extends BroadcastReceiver {
         boolean hasRemoved = intent.getBooleanExtra(IS_REMOVED, false);
         boolean canReply = intent.getBooleanExtra(CAN_REPLY, false);
         int id = intent.getIntExtra(ID, -1);
+
+        // 내 앱에서 보낸 알림인지 확인
+        if (packageName.equals(context.getPackageName())) {
+            return;
+        }
 
         HashMap<String, Object> data = new HashMap<>();
         data.put("type", "push");
@@ -53,6 +57,8 @@ public class NotificationReceiver extends BroadcastReceiver {
         data.put("canReply", canReply);
 
         Log.d("NotificationReceiver", data.toString());
+
+        
 
         eventSink.success(data);
     }
