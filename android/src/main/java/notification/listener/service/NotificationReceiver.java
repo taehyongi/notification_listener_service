@@ -19,13 +19,13 @@ public class NotificationReceiver extends BroadcastReceiver {
 
     public NotificationReceiver(EventSink eventSink) {
         this.eventSink = eventSink;
-        Log.d("NotificationReceiver", eventSink.toString());
+        Log.d("NotificationReceiver 1", eventSink.toString());
     }
 
     @RequiresApi(api = VERSION_CODES.JELLY_BEAN_MR2)
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.d("NotificationReceiver", "onReceive");
+        Log.d("NotificationReceiver 2", "onReceive");
         String packageName = intent.getStringExtra(PACKAGE_NAME);
         String appName = intent.getStringExtra(APP_NAME);
         String title = intent.getStringExtra(NOTIFICATION_TITLE);
@@ -38,7 +38,7 @@ public class NotificationReceiver extends BroadcastReceiver {
         boolean canReply = intent.getBooleanExtra(CAN_REPLY, false);
         int id = intent.getIntExtra(ID, -1);
 
-        Log.d("NotificationReceiver", "id: " + String.valueOf(id));
+        Log.d("NotificationReceiver 3", "id: " + String.valueOf(id));
 
 
         HashMap<String, Object> data = new HashMap<>();
