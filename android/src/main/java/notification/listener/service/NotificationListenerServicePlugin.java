@@ -97,9 +97,9 @@ public class NotificationListenerServicePlugin implements FlutterPlugin, Activit
                 }  
             }
             catch (Exception e) {
-                Log.d("NotificationListenerServicePlugin", "Error: " + e);
+                Log.e("NotificationListenerServicePlugin", "Error: " + e);
             }
-            Log.d("NotificationListenerServicePlugin", "requestPermission");
+            // Log.d("NotificationListenerServicePlugin", "requestPermission");
         } else if (call.method.equals("sendReply")) {
             final String message = call.argument("message");
             final int notificationId = call.argument("notificationId");
@@ -119,7 +119,7 @@ public class NotificationListenerServicePlugin implements FlutterPlugin, Activit
             ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
             for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
                 // 서비스명 로그
-                Log.d("service.service.getClassName()", service.service.getClassName());
+                // Log.d("service.service.getClassName()", service.service.getClassName());
                 if ("notification.listener.service.NotificationListener".equals(service.service.getClassName())) {
                     result.success(true);
                     return;
@@ -150,7 +150,7 @@ public class NotificationListenerServicePlugin implements FlutterPlugin, Activit
 
     @Override
     public void onAttachedToActivity(@NonNull ActivityPluginBinding binding) {
-        Log.d("NotificationListenerServicePlugin", "onAttachedToActivity");
+        // Log.d("NotificationListenerServicePlugin", "onAttachedToActivity");
         this.mActivity = binding.getActivity();
         binding.addActivityResultListener(this);
     }
@@ -167,7 +167,7 @@ public class NotificationListenerServicePlugin implements FlutterPlugin, Activit
 
     @Override
     public void onDetachedFromActivity() {
-        Log.d("NotificationListenerServicePlugin", "onDetachedFromActivity");
+        // Log.d("NotificationListenerServicePlugin", "onDetachedFromActivity");
         this.mActivity = null;
     }
     @SuppressLint("WrongConstant")

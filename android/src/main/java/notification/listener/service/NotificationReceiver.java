@@ -19,7 +19,7 @@ public class NotificationReceiver extends BroadcastReceiver {
 
     public NotificationReceiver(EventSink eventSink) {
         this.eventSink = eventSink;
-        Log.d("NotificationReceiver 1", eventSink.toString());
+        // Log.d("NotificationReceiver 1", eventSink.toString());
     }
 
     @RequiresApi(api = VERSION_CODES.JELLY_BEAN_MR2)
@@ -65,7 +65,7 @@ public class NotificationReceiver extends BroadcastReceiver {
         data.put("hasRemoved", hasRemoved);
         data.put("canReply", canReply);
 
-        Log.d("NotificationReceiver", data.toString());
+        // Log.d("NotificationReceiver", data.toString());
 
         
 
