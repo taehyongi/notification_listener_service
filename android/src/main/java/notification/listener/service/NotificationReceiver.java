@@ -46,9 +46,9 @@ public class NotificationReceiver extends BroadcastReceiver {
         int id = intent.getIntExtra(ID, -1);
 
         // 내 앱에서 보낸 알림인지 확인
-        if (packageName.equals(context.getPackageName())) {
-            return;
-        }
+        // if (packageName.equals(context.getPackageName())) {
+        //     return;
+        // }
 
         // hasRemoved true 이면 보내지 않음
         if (hasRemoved) {
