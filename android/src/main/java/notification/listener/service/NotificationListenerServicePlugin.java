@@ -41,7 +41,7 @@ public class NotificationListenerServicePlugin implements FlutterPlugin, Activit
     private MethodChannel channel;
     private EventChannel eventChannel;
     private NotificationReceiver notificationReceiver;
-    private SmsReceiver smsReceiver;
+    // private SmsReceiver smsReceiver;
     private Context context;
     private Activity mActivity;
     private String smsDefaultPackageName;
@@ -132,9 +132,9 @@ public class NotificationListenerServicePlugin implements FlutterPlugin, Activit
             result.success(smsDefaultAppName);
         } else if(call.method.equals("restartService")) {
             Intent listenerIntent = new Intent(context, NotificationReceiver.class);
-            Intent smsIntent = new Intent(context, SmsReceiver.class);
+            // Intent smsIntent = new Intent(context, SmsReceiver.class);
             context.startService(listenerIntent);
-            context.startService(smsIntent);
+            // context.startService(smsIntent);
             result.success(true);   
         }        
         else {
@@ -174,32 +174,32 @@ public class NotificationListenerServicePlugin implements FlutterPlugin, Activit
     @Override
     public void onListen(Object arguments, EventChannel.EventSink events) {
         IntentFilter intentFilter = new IntentFilter();
-        IntentFilter smsIntentFilter = new IntentFilter();
+        // IntentFilter smsIntentFilter = new IntentFilter();
         intentFilter.addAction(NotificationConstants.INTENT);
-        smsIntentFilter.addAction(NotificationConstants.SMS_INTENT);
+        // smsIntentFilter.addAction(NotificationConstants.SMS_INTENT);
         notificationReceiver = new NotificationReceiver(events);
 
-        smsReceiver = new SmsReceiver(events, smsDefaultPackageName, smsDefaultAppName);
+        // smsReceiver = new SmsReceiver(events, smsDefaultPackageName, smsDefaultAppName);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
             context.registerReceiver(notificationReceiver, intentFilter, Context.RECEIVER_EXPORTED);
-            context.registerReceiver(smsReceiver, smsIntentFilter, Context.RECEIVER_EXPORTED);
+            // context.registerReceiver(smsReceiver, smsIntentFilter, Context.RECEIVER_EXPORTED);
         }else{
             context.registerReceiver(notificationReceiver, intentFilter);
-            context.registerReceiver(smsReceiver, smsIntentFilter);
+            // context.registerReceiver(smsReceiver, smsIntentFilter);
         }
         Intent listenerIntent = new Intent(context, NotificationReceiver.class);
-        Intent smsIntent = new Intent(context, SmsReceiver.class);
+        // Intent smsIntent = new Intent(context, SmsReceiver.class);
         context.startService(listenerIntent);
-        context.startService(smsIntent);
+        // context.startService(smsIntent);
         Log.i("NotificationPlugin", "Started the notifications tracking service.");
     }
 
     @Override
     public void onCancel(Object arguments) {
         context.unregisterReceiver(notificationReceiver);
-        context.unregisterReceiver(smsReceiver);
+        // context.unregisterReceiver(smsReceiver);
         notificationReceiver = null;
-        smsReceiver = null;
+        // smsReceiver = null;
     }
 
     @Override

@@ -53,13 +53,13 @@ class _MyAppState extends State<MyApp> {
                     const SizedBox(height: 20.0),
                     TextButton(
                       onPressed: () async {
-                        Permission.sms.request();
+                        // Permission.sms.request();
                         String a = await NotificationListenerService
                             .getDefaultSmsPackageName();
                         log("getDefaultSmsPackageName: $a");
-                        final bool res = await NotificationListenerService
-                            .isPermissionGranted();
-                        log("Is enabled: $res");
+                        // final bool res = await NotificationListenerService
+                        // .isPermissionGranted();
+                        // log("Is enabled: $res");
                       },
                       child: const Text("Check Permission"),
                     ),
